@@ -59,7 +59,7 @@ public class BaseConfigInfoMapper extends ConfigInfoMapperByMySql {
         final String appName = (String) context.getWhereParameter(FieldConstant.APP_NAME);
         final String tenantId = (String) context.getWhereParameter(FieldConstant.TENANT_ID);
         String sql = getLimitPageSqlWithOffset("SELECT id,data_id,group_id,tenant_id,app_name,content FROM config_info"
-                + " WHERE tenant_id LIKE ? AND app_name= ?", startRow, pageSize);
+                + " WHERE tenant_id LIKE ? AND app_name= ? ORDER BY id ", startRow, pageSize);
         return new MapperResult(sql, CollectionUtils.list(tenantId, appName));
     }
     
@@ -266,7 +266,7 @@ public class BaseConfigInfoMapper extends ConfigInfoMapperByMySql {
         }
         int startRow = context.getStartRow();
         int pageSize = context.getPageSize();
-        String sql = getLimitPageSqlWithOffset(sqlFetchRows + where, startRow, pageSize);
+        String sql = getLimitPageSqlWithOffset(sqlFetchRows + where + " ORDER BY id ", startRow, pageSize);
         return new MapperResult(sql, paramList);
     }
     
